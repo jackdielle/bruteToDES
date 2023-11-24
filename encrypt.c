@@ -3,14 +3,6 @@
 #include <string.h>
 #include <openssl/des.h>
 
-void pad_key(unsigned char* key, size_t len) {
-    const size_t key_len = 8;
-    const unsigned char pad_char = 0;
-    if (len < key_len) {
-        memset(key + len, pad_char, key_len - len);
-    }
-}
-
 int main() {
 
     // Chiave binaria a 64 bit
@@ -19,9 +11,7 @@ int main() {
         0b00100000, 0b01000000, 0b00110100, 0b00001011
     };
 
-
-
-    const char* plaintext = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+    const char* plaintext = ""; //inserire qui il testo da cifrare
 
     // Inizializzazione DES
     DES_cblock des_key;
