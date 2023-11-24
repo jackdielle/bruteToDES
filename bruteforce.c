@@ -16,15 +16,6 @@ void binaryStringToBytes(const char* binaryStr, unsigned char* bytes) {
     }
 }
 
-
-
-// Funzione per stampare un numero in binario su 8 bit
-void print_binary(int num) {
-    for (int i = 7; i >= 0; i--) {
-        printf("%d", (num >> i) & 1);
-    }
-}
-
 const char* ullToBinaryString(unsigned long long num) {
     static char binaryStr[65]; // 64 bit + null-terminator
     binaryStr[64] = '\0'; // Null-terminator alla fine
@@ -39,15 +30,14 @@ const char* ullToBinaryString(unsigned long long num) {
 
 int main() {
     int combinations = 0; // Variabile per conteggiare le combinazioni
-    const char* ciphertext_hex = "561098a306ce67a82c7b6d4677312ca76fababe37d6eea4b92e0e7ed4db1d9af32ab720627197eff5ee8a666adb184e405575180260bf0d4fc1a4f2214d75c598f460fba81dc72d4e3c963977813d61b4cccc901b2f5fb99dedd56afc621b5d65b94b2e7898ddec9b353c34acbc563e89513e1ca4e113a34a255a4ec188e37190d116997df9f64c3119e16fbed024c52c280c59e3b701f23b2a26b344217a174dc74784c600bf3846c372ad45ea1a4e7cd4be8f1742265023978b1af424e13e837d258dff94a48f563dc2ec9749edc26ac4706bb5b9cc859cea438c1b239e5b3bfc51b8e3a1c601c57c9a048253170ce887076c6eb7c684f330d1423da22fbcdb4786baeb4bc1b17aa0ff1ac34d8a7dd0917267f20c6b8cf8bb8448e262f55b1ff84dc4c7a8619b0ecaf6de1ee7b43e24d934c6c1cb68da8717584c85459dced31fa0a86153ae29ccd39830ea07703cc1f80cdf163ca267e12013bb865ce11c1ebd60dd64f9fa0674e58b90f3a00eeabf889c209f72477c8f75acf3cc000e3f21329231f94b769eb6dcd4b4ae0e857f6ded49d394a95043656befde68e24d47fb68c0593af82100aade9a6a55c45975a37e6fc0b57a4e1c6ef3e2fcca7b5ec37afbb732d8ffe66e9771748d868abb9eb62018078f8874a5a98d1a4586d71957d9cd999ce933df54f3d48b568d8842e1d4d219c5574d6a305851b9de2ccc1ca48a437b39c33b9a9abba4f7a0222787d1ee947073d3bc4d2c1402a59e3142b9c4794fe2e86010a0040378abda969a90b03bc8962ef2df35f32a6ef6f30320a80bc";
+    const char* ciphertext_hex = ""; //inserire qui il testo cifrato in esadecimale
     const size_t ciphertext_len = strlen(ciphertext_hex) / 2;
     unsigned char* ciphertext = (unsigned char*)malloc(ciphertext_len);
     for (int i = 0; i < ciphertext_len; i++) {
         sscanf(ciphertext_hex + 2 * i, "%02hhx", &ciphertext[i]);
     }
-    const char* plaintext = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+    const char* plaintext = ""; // inserire qui il testo in chiaro da confrontare con quelli decifrati
 
-    printf("Tutte le possibili combinazioni di 64 bit in binario con parità:\n");
     bool found = false;
     for (int i = 0; i < 128 && !found; i++) {
         int number1 = i;
@@ -92,13 +82,10 @@ int main() {
                                         ((unsigned long long)number6_with_parity << 16) |
                                         ((unsigned long long)number7_with_parity << 8)  |
                                         (unsigned long long)number8_with_parity;
-
-
                                     
                                     // Chiave binaria in formato stringa
                                     const char* binary_key_str = ullToBinaryString(concatenated_number);
 
-                                    // Converti la chiave binaria da stringa a array di bytes
                                     unsigned char binary_key[8];
                                     binaryStringToBytes(binary_key_str, binary_key);
 
@@ -125,9 +112,6 @@ int main() {
                                         decrypted_len += 8;
                                     }
 
-                                    // Stampa testo decifrato
-                                    
-
                                     // Confronta il testo decifrato con il testo in chiaro
                                     if (memcmp(decrypted_text, plaintext, ciphertext_len) == 0) {
                                         for (int b = 63; b >= 0; b--) {
@@ -141,15 +125,7 @@ int main() {
                                         printf("Ora corrente: %s", ctime(&current_time));
                                         found = true;
                                         printf("TESTO DECIFRATO CORRETTAMENTE.\n");
-                                    } else {
-                                        //printf("Testo decifrato non combacia con il testo in chiaro.\n");
-                                        for (int b = 63; b >= 0; b--) {
-                                        printf("%llu", (concatenated_number >> b) & 1);
-                                        }
-                                        printf("\n");
-                                    }
-
-
+                                    } 
                                     combinations++; // Incrementa il contatore delle combinazioni
                                 }
                             }
